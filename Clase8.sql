@@ -71,4 +71,6 @@ GROUP BY rating;
 				             
 SELECT rating, AVG(length)
 FROM film
-GROUP BY rating;	              
+GROUP BY rating;
+
+
