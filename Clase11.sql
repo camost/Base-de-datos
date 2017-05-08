@@ -8,10 +8,14 @@ GROUP BY country;
 -- 2 todas las ciudades por country con mas de 10 cityes
 SELECT country,COUNT(*)
 FROM city b,country a
+-- INNER JOIN city USING(country_id) sacar where
 WHERE b.country_id=a.country_id
 GROUP BY country
 HAVING COUNT(*) >10 
 ORDER BY 2 DESC;
+
+FROM country
+INNER JOIN city USING (country_id)
 
 -- 3 todos los clientes, su direcion, cuantas pelis alquilaron y cuanto gastaron 
 SELECT first_name,last_name,address,COUNT(*),sum(amount) AS gastado
@@ -33,14 +37,21 @@ ORDER BY 5 DESC;
 
 -- 4 todas las pelis que no estan en el inventory
 SELECT title
-FROM film f
-WHERE f.film_id NOT IN (SELECT film_id
+FROM film
+WHERE film_id NOT IN (SELECT DISTINCT film_id
 						FROM inventory);
 						
 -- 5 todas las pelis que esten en el inventario pero no fueron rent
-SELECT title
-FROM film f
-WHERE f.film_id IN (SELECT film_id
-						FROM inventory)
-AND rental_rate IS NULL;
 
+SELECT * 
+FROM (SELECT title,inventory_id FROM film INNER JOIN inventory USING(film_id)) a 
+WHERE inventory_id NOT IN (SELECT DISTINCT inventory_id FROM rental);
+
+-- 6 
+
+SELECT first_name,last_name,customer.store_id,title,rental_date,return_date
+FROM customer
+JOIN rental USING (customer_id)
+JOIN inventory USING (inventory_id)
+JOIN film USING (film_id)
+ORDER BY customer.store_id,last_name;

@@ -13,6 +13,10 @@ FROM film
 INNER JOIN `language`
 USING (language_id);
 
+SELECT *
+  FROM film AS f
+      INNER JOIN `language` AS l
+              ON f.language_id = l.language_id
 
 SELECT * 
 FROM film AS f
