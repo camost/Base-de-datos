@@ -36,9 +36,27 @@ ORDER BY rating;
 # Assume the actor comes from a text box introduced by hand from a web page. 
 # Make sure to "adjust" the input text to try to find the films as effectively as you think is possible.
 
-SELECT title, `release_year`,TRIM(first_name),
+SELECT title AS "Pelicula", `release_year` AS "Año de Esteno",CONCAT_WS(" ", first_name, last_name) AS Nombre
 FROM film
 INNER JOIN film_actor USING (film_id)
 INNER JOIN actor USING (actor_id)
-WHERE first_name="";
+WHERE UPPER(CONCAT_WS(' ', first_name, last_name)) 
+LIKE TRIM(UPPER("  %Bob Fawc%  "));
 
+
+
+
+#4. Find all the rentals done in the months of May and June. 
+#Show the film title, customer name and if it was returned or not. 
+#There should be returned column with two possible values 'Yes' and 'No'.
+
+SELECT title,CONCAT_WS(" ", first_name,last_name) AS Nombre,
+    CASE WHEN rental.return_date IS NOT NULL THEN 'YES Baby'
+    ELSE 'NO!!! (Send Hitman)' END AS Returned,
+	MONTHNAME(rental.rental_date) AS month
+  FROM film
+  	INNER JOIN inventory USING(film_id)
+  	INNER JOIN rental USING(inventory_id)
+  	INNER JOIN customer USING(customer_id)
+WHERE MONTHNAME(rental.rental_date) LIKE 'May'
+   OR MONTHNAME(rental.rental_date) LIKE 'June';
