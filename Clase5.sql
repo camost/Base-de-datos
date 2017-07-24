@@ -18,8 +18,15 @@ AND d.store_id = 2;
 
 
 
+SELECT first_name,last_name
+  FROM customer
+ WHERE customer_id IN (SELECT customer_id
+                         FROM payment
+                        WHERE amount BETWEEN 3 AND 4); 
 
--- dataion si saco el not hace como un intersec
+
+
+-- esto es un except y dataion si saco el not hace como un intersec
 
 SELECT first_name, last_name
 FROM customer
@@ -31,6 +38,24 @@ AND customer_id NOT IN (SELECT customer_id
 							WHERE amount = 1.99)
 AND first_name LIKE ('W%');
 
+
+
+SELECT first_name,last_name, SUM(amount) as gastado
+FROM customer, payment
+WHERE customer.customer_id=payment.customer_id
+GROUP BY first_name,last_name
+ORDER BY gastado DESC
+
+SELECT first_name, MAX(amount)
+FROM payment p, customer c
+WHERE c.customer_id=p.customer_id
+GROUP BY first_name
+ORDER BY 2 DESC
+
+
+SELECT amount, COUNT(*)
+FROM payment
+GROUP BY amount;
 -- buscar gente de mismo nombre
 
 SELECT first_name,last_name
@@ -47,6 +72,21 @@ FROM film f1
 WHERE NOT EXISTS (SELECT *
 					FROM film f2
 					WHERE f2.length > f1.length);
+					
+					
+
+					
+SELECT title,length 
+FROM film f1
+WHERE NOT EXISTS (SELECT *
+					FROM film f2
+					WHERE f2.length < f1.length);
+					
+					
+					
+					
+					
+					
 
 --  lo mismo que al anterior 
 SELECT title,length

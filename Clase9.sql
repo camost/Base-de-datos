@@ -17,11 +17,27 @@ WHERE c.customer_id = r1.customer_id
 GROUP BY c.customer_id,first_name,last_name
 HAVING COUNT(*) = 1;
 
+
+
+
+
+SELECT first_name,last_name,COUNT(*) AS "Gente que alquilo mas de 2"
+FROM customer
+INNER JOIN rental USING(customer_id)
+GROUP BY first_name,last_name
+HAVING COUNT(*) > 2
+
+
+
+
+
+
+
 -- peliculas cuyo larg minimo sea de 46
 SELECT rating,MIN(length)
 FROM film
 GROUP BY rating
-HAVING MIN(length) > 46;
+HAVING MIN(length)=46;
 
 -- cantidad de peliculas total por categoria, menores a 195 count cuenta rows
 SELECT rating, COUNT(*)

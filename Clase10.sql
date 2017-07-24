@@ -61,7 +61,7 @@ SELECT *
 FROM film
 INNER JOIN language
 USING (language_id);
---- devuelve la tabla que pedis
+--  devuelve la tabla que pedis
 SELECT *
 FROM actor a1
 NATURAL JOIN actor a2;

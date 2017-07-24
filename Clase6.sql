@@ -32,7 +32,7 @@ WHERE NOT EXISTS (SELECT *
 				  FROM rental r2
 				  WHERE r1.customer_id= r2.customer_id
 				  AND r1.rental_id <> r2.rental_id)
-				  AND r1.customer_id= c1.customer_id;		
+				  AND r1.customer_id= c1.customer_id;	
 				  
 SELECT first_name,last_name
 FROM customer c1
@@ -77,9 +77,25 @@ AND film_actor.film_id=film.film_id
 AND title IN ('BETRAYED REAR')
 AND title IN ('CATCH AMISTAD')
 
+SELECT title, COUNT(*)
+FROM actor,film,film_actor
+WHERE actor.actor_id=film_actor.actor_id
+AND film_actor.film_id=film.film_id
+GROUP BY title
 
+SELECT title, COUNT(*) AS "Cantida de actores"
+FROM actor
+INNER JOIN film_actor USING(actor_id)
+INNER JOIN film USING(film_id)
+GROUP BY title
+
+SELECT first_name, last_name,title
+FROM film
+JOIN film_actor USING(film_id)
+JOIN actor USING(actor_id)
+WHERE title IN ('BETRAYED REAR','CATCH AMISTAD');
 -- ej:8
-SELECT DISTINCT first_name,last_name
+SELECT DISTINCT first_name,last_name,title
 FROM actor,film,film_actor
 WHERE actor.actor_id=film_actor.actor_id
 AND film_actor.film_id=film.film_id

@@ -707,9 +707,9 @@ FROM film
 WHERE special_features LIKE '%Trailers%';
 
 -- Para letras ;)
-SELECT * 
-FROM address
-WHERE address LIKE '%a_%';
+SELECT first_name
+FROM customer
+WHERE first_name LIKE '%a%';
 
 
 -- puedo hacer operaciones matematicas re piolas y ordenar tmb
@@ -730,3 +730,5 @@ SELECT title
 FROM film
 WHERE title LIKE 'A%'
 OR title LIKE 'S%';
+                        
+                        
