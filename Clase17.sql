@@ -40,7 +40,7 @@ WHERE MATCH(productName) AGAINST('1932,Ford');
 
 -----------------------------------------
 
-
+-- Ej 1:
 -- Create two or three queries using address table in sakila db:
 -- include postal_code in where (try with in/not it operator) 
 -- eventually join the table with city/country tables.
@@ -59,3 +59,14 @@ WHERE postal_code IN (SELECT postal_code
 					  WHERE postal_code LIKE '%3%');
 					  
 CREATE INDEX codigo_direccion ON address(postal.code);
+
+----------------------------------------------------------
+-- Ej 2: Run queries using actor table, searching for first and last name columns independently.
+-- Explain the differences and why is that happening?
+
+-- es mas "rapido" igual una ves cacheado no te das cuenta
+SELECT first_name FROM actor WHERE first_name LIKE "%ed%";
+SELECT last_name FROM actor WHERE last_name LIKE "%gable%";
+
+-- 3 Compare results finding text in the description 
+-- on table film with LIKE and in the film_text using MATCH ... AGAINST. Explain the results.
