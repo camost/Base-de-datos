@@ -1,0 +1,197 @@
+>>>#Comandos Redis
+##by Sosa
+
+##Ejemplos String
+---
+1. redis:6379> set fabre bobo  
+OK  
+redis:6379> get fabre  
+"bobo"  
+---
+2.  
+redis:6379> set cosas 10  
+OK  
+redis:6379>get cosas  
+"10"  
+redis:6379> incr cosas  
+(integer) 11  
+redis:6379> get cosas  
+"11"  
+
+---
+3. redis:6379> set pichon "fabre"  
+OK  
+redis:6379> get pichon  
+"fabre"  
+redis:6379> strlen pichon  
+(integer) 5  
+---
+4. redis:6379>  MSETNX key1 "uno" key2 "dos"  
+(integer) 1  
+redis:6379> mget key1 
+1) "uno"  
+redis:6379> mget key1 key2  
+1) "uno"  
+2) "dos"  
+
+>>##Ejemplos de Hash:  
+
+--- 
+1. 
+redis:6379> HMSET midios name:"Jesus" edad:33  
+OK  
+redis:6379> HGETALL midios  
+1) "name:Jesus"  
+2) "edad:33"  
+---
+2. 
+redis:6379> hset elhash p1 "torta"  
+(integer) 1  
+redis:6379> hset elhash p2 "cocholate"  
+(integer) 1  
+redis:6379> hlen elhash  
+(integer) 2   
+---
+3. 
+redis:6379> hvals elhash  
+1) "torta"  
+2) "cocholate"  
+---
+4.  
+redis:6379> hset elhash p3 2.50  
+(integer) 1  
+redis:6379> hincrbyfloat elhash p3 0.3  
+"2.8"  
+
+>>##Ejemplos de List:  
+
+---
+
+1.  
+redis:6379> lpush lista papafrita  
+(integer) 1  
+redis:6379> lpush lista chisitos  
+(integer) 2  
+redis:6379> lrange lista 0 100  
+1) "chisitos"  
+2) "papafrita"  
+---
+2.  
+redis:6379> linsert lista before "chisitos" "cocacola"  
+(integer) 6  
+redis:6379> lrange lista 0 -1  
+1) "cocacola"  
+2) "chisitos"  
+3) "papafrita"  
+---
+3. 
+redis:6379> LREM lista -3 "papafrita"  
+(integer) 2  
+redis:6379> lrange lista 0 -1  
+1) "cocacola"  
+2) "chisitos"  
+---
+4. 
+redis:6379> llen lista  
+(integer) 2  
+
+>>##Ejemplos de Sets:  
+
+---
+
+1. 
+redis:6379> sadd elset alesi  
+(integer) 1  
+redis:6379> sadd elset cumbia  
+(integer) 1  
+redis:6379> sadd elset labarra  
+(integer) 1  
+redis:6379> sadd elset labarra  
+(integer) 0  
+redis:6379> smembers elset  
+1) "labarra"  
+2) "cumbia"  
+3) "alesi"  
+
+---
+2. redis:6379> scard elset  
+(integer) 3  
+---
+3.  
+redis:6379> sadd elset2 cumbia  
+(integer) 1  
+redis:6379> sdiff elset elset2  
+1) "alesi"  
+2) "labarra"  
+---
+4. 
+redis:6379> smove elset elset2 "alesi"  
+(integer) 1  
+redis:6379> smembers elset  
+1) "labarra"  
+2) "cumbia"  
+redis:6379> smembers elset2   
+1) "alesi"  
+2) "cumbia"  
+
+>>##Ejemplos de Sorted Sets:  
+
+---
+1.  
+redis:6379> zadd soreted 1 hola  
+(integer) 1  
+redis:6379> zadd soreted 2 como  
+(integer) 1  
+redis:6379> zadd soreted 3 esta  
+(integer) 1  
+redis:6379> zadd soreted 4 uste  
+(integer) 1  
+redis:6379> zrange soreted 0 -1 
+1) "hola"
+2) "como"
+3) "esta"
+4) "uste"
+---
+2. 
+redis:6379> zrange soreted 0 -1 withscores  
+1) "hola"  
+2) "1"  
+3) "como"  
+4) "2"  
+5) "esta"  
+6) "3"  
+7) "uste"  
+8) "4"  
+---
+3. 
+redis:6379> zcard soreted  
+(integer)  
+---
+4.  
+redis:6379> zrank soreted como  
+(integer) 1  
+redis:6379> zrank soreted hola  
+(integer) 0  
+redis:6379> zrank soreted uste  
+(integer) 3  
+
+>>##Ejemplos de Publish Subscribe:
+
+---
+1.
+redis:6379> SUBSCRIBE mensajeador  
+Reading messages... (press Ctrl-C to quit) 
+1) "subscribe" 
+2) "pubish" 
+3) (integer) 1 
+
+2.
+publish mensajeador "SOY EL MAPA SOY EL MAPA SOY EL MAPA EL MAPA QUE EL MAPAAAA"  
+
+redis:6379> SUBSCRIBE mensajeador  
+Reading messages... (press Ctrl-C to quit)  
+1) "subscribe"  
+2) "mensajeador"  
+3) (integer) 1  
+4) "SOY EL MAPA SOY EL MAPA SOY EL MAPA EL MAPA QUE EL MAPAAAA"  
+
