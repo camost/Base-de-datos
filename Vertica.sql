@@ -45,7 +45,7 @@ AND orders.vendor_key NOT IN (
     FROM public.vendor_dimension
     WHERE vendor_state = 'MA')
 AND date_ordered < '2003-03-01';
--- devulve los numeros de ordenes 
+-- devulve los numeros de ordenes de masachusets
 
 
 -- 3 Requests female and male customers with the maximum 
@@ -57,7 +57,7 @@ WHERE (customer_gender, annual_income) IN
       (SELECT customer_gender, MAX(annual_income)
        FROM public.customer_dimension
        GROUP BY customer_gender);
-       
+ -- hombre y mujer que mas gana
 
 -- 4 IN predicate
 -- Find all products supplied by stores in MA
@@ -73,7 +73,7 @@ WHERE s.product_key = p.product_key
 ORDER BY s.product_key;
        
        
-       
+      / 
 -- 5
 -- EXISTS predicate
 -- Get a list of all the orders placed by all stores on 
@@ -101,21 +101,7 @@ AND date_ordered = '2003-01-02';
 -- on January 4, 2004
 
 
-
-
-
 -- 7
--- Multicolumn subquery
--- Which products have the highest cost, 
--- grouped by category and department 
----no hacerrrr
-
--- 8
--- Using pre-join projections to answer subqueries
--- between online_sales_fact and online_page_dimension
-
-
--- 9
 -- Equi join
 -- Joins online_sales_fact table and the call_center_dimension 
 -- table with the ON clause  
