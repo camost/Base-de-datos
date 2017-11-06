@@ -4,8 +4,6 @@
 
 SELECT COUNT(DISTINCT film_id)
 FROM inventory
-WHERE store_id=2;
-
 
 SELECT COUNT(*)
 FROM inventory

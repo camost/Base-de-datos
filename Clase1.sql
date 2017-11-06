@@ -53,7 +53,7 @@ CREATE TABLE inventory
   min_level INT,
   max_level INT
 );		
-
+SELECT * FROM inventory;
 ALTER TABLE inventory ADD
 	CONSTRAINT fk_inventory_products
 		FOREIGN KEY (product_name, location)
